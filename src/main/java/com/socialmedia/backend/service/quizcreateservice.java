@@ -2,8 +2,10 @@ package com.socialmedia.backend.service;
 
 import com.socialmedia.backend.model.quizdetail;
 import com.socialmedia.backend.model.quizmcqs;
+import com.socialmedia.backend.model.quizparticipated;
 import com.socialmedia.backend.repo.quizdetailsrepo;
 import com.socialmedia.backend.repo.quizmcqsrepo;
+import com.socialmedia.backend.repo.quizparticipatedrepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +20,20 @@ public class quizcreateservice {
     quizdetailsrepo pr;
     @Autowired
     quizmcqsrepo mr;
+    @Autowired
+    quizparticipatedrepo qpr;
     public void savequizdetails(quizdetail q){
         pr.save(q);
     }
     public void savequizmcqs(quizmcqs q){
         mr.save(q);
     }
+    public List<quizmcqs> getQuestionsByQuizId(int quizid) {
+        return mr.findByquizid(quizid);
+    }
 
-    public ArrayList<quizmcqs> getallmcqs(int quizid) {
-        List<quizmcqs> mcqsList = mr.FindByquizid(quizid);
-        return new ArrayList<>(mcqsList);
+    public void saveparticipated(quizparticipated q) {
+        qpr.save(q);
     }
 }
 

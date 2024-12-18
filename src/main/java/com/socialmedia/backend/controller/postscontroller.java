@@ -2,13 +2,15 @@ package com.socialmedia.backend.controller;
 
 import com.socialmedia.backend.model.quizdetail;
 import com.socialmedia.backend.model.quizmcqs;
+import com.socialmedia.backend.model.quizparticipated;
 import com.socialmedia.backend.service.quizcreateservice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Controller
 @RestController
 @CrossOrigin
 public class postscontroller {
@@ -25,7 +27,12 @@ public class postscontroller {
         ps.savequizmcqs(q);
     }
     @GetMapping("/takequiz/{quizid}")
-    public ArrayList<quizmcqs> getquiz(@PathVariable int quizid){
-        return ps.getallmcqs(quizid);
+    public List<quizmcqs> getquiz(@PathVariable int quizid){
+        return ps.getQuestionsByQuizId(quizid);
+    }
+    @PostMapping("/addparticipated")
+    public void addparticipatedquizdetail(@RequestBody quizparticipated q){
+        System.out.println(q);
+        ps.saveparticipated(q);
     }
 }
